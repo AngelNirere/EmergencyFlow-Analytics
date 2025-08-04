@@ -6,8 +6,8 @@
 
 ## 👨‍🎓 Project Information
 
-*Student Name:* [Your Name]  
-*Student ID:* [Your ID]  
+*Student Name:* [Nirere Angelique]  
+*Student ID:* [26564]  
 *Course:* INSY 8413 | Introduction to Big Data Analytics  
 *Date:* Saturday, July 26, 2025  
 *Academic Year:* 2024-2025, SEM III
