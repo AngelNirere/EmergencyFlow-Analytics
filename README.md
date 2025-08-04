@@ -87,36 +87,33 @@ The primary purpose is to reduce emergency response times and ultimately save mo
 #### *Step 1: Data Loading & Exploration*
 *Purpose:* Load dataset and understand structure
 
-```python
+python
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-```
 # Load the CSV dataset
 ```
 df = pd.read_csv("emergencyflow_rwanda_expanded.csv")
-```
-# Basic dataset information
 
-```
+# Basic dataset information
 print("📊 Dataset Info:")
 print(df.info())
 print(f"\n📏 Dataset Shape: {df.shape[0]} rows × {df.shape[1]} columns")
+
 ```
 *Output Result:*
-
-📊 Dataset Info:
 ```
+📊 Dataset Info:
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 245 entries, 0 to 244
 Data columns (total 17 columns):
 📏 Dataset Shape: 245 rows × 17 columns
 ```
 
+<img width="1119" height="680" alt="Dataset Loading Output" src="https://github.com/user-attachments/assets/c2f3d832-4aaf-4d4d-ae38-84271959882e" />
 
-<img width="1119" height="680" alt="Dataset Loading Output" src="https://github.com/user-attachments/assets/2e333778-f5e2-47e7-a013-39179b5f4a69" />
 
 
 #### *Step 2: Data Cleaning & Preprocessing*
@@ -127,9 +124,8 @@ Data columns (total 17 columns):
 print("❌ Missing Values Analysis:")
 missing_data = df.isnull().sum()
 print(missing_data[missing_data > 0])
-```
+
 # Create response time categories
-```
 df_clean['Response_Category'] = pd.cut(df_clean['Response_Time_Min'], 
                                      bins=[0, 15, 25, 35, float('inf')], 
                                      labels=['Excellent', 'Good', 'Average', 'Poor'])
@@ -143,7 +139,8 @@ print("✅ Data cleaning completed - No missing values found!")
 ```
 
 
-<img width="621" height="636" alt="Data Cleaning Results" src="https://github.com/user-attachments/assets/8a63a3df-482f-4e79-a657-5caffb1d8e9a" />
+<img width="621" height="636" alt="Data Cleaning Results" src="https://github.com/user-attachments/assets/48d2d730-6acd-4370-8d85-fbb21dc63cd1" />
+
 
 
 #### *Step 3: Exploratory Data Analysis (EDA)*
@@ -168,6 +165,7 @@ axes[0, 0].set_ylabel('Frequency')
 plt.tight_layout()
 plt.show()
 ```
+<img width="690" height="641" alt="EDA Overview Dashboard with Response Time Distribution" src="https://github.com/user-attachments/assets/a068285e-04ce-48cb-b5bb-d8949f53170f" />
 
 *Key Findings:*
 - Average response time: *26.8 minutes*
@@ -175,8 +173,6 @@ plt.show()
 - Worst performing region: *Kicukiro*
 
 
-
-<img width="690" height="641" alt="image" src="https://github.com/user-attachments/assets/5e50278a-a4c4-4386-9c81-436d6340d644" />
 
 
 
@@ -194,18 +190,18 @@ sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', center=0,
             square=True, fmt='.2f')
 plt.title('🔗 Correlation Matrix: Emergency Response Factors')
 plt.show()
-```
+
 # Key correlations with Response Time
-```
 response_correlations = correlation_matrix['Response_Time_Min'].sort_values(key=abs, ascending=False)
 print("🎯 KEY CORRELATIONS WITH RESPONSE TIME:")
 for feature, corr in response_correlations.items():
     if feature != 'Response_Time_Min' and abs(corr) > 0.3:
         print(f"{feature}: {corr:.3f}")
-
-
 ```
-<img width="601" height="540" alt="Correlation Heatmap showing traffic congestion correlation" src="https://github.com/user-attachments/assets/5b915e45-5262-4288-a240-76b531576471" />
+
+<img width="601" height="540" alt="Correlation Heatmap showing traffic congestion correlation" src="https://github.com/user-attachments/assets/d64f61b7-5577-486c-ab6e-87cfd60518f0" />
+
+
 
 
 #### *Step 5: Machine Learning Models*
@@ -256,7 +252,7 @@ print(f"   📊 Test MAE: {test_mae:.4f} minutes")
    - Test MAE: *2.81 minutes*
 
 ```
-<img width="624" height="645" alt="Model Performance Comparison Chart" src="https://github.com/user-attachments/assets/43e0e218-6a44-4271-9b6e-d31924d556e9" />
+<img width="624" height="645" alt="Model Performance Comparison Chart" src="https://github.com/user-attachments/assets/72093315-34b3-47b8-85d3-094a2f0a6d14" />
 
 
 #### *Step 6: Feature Importance Analysis*
@@ -280,8 +276,8 @@ plt.barh(feature_importance['Feature'], feature_importance['Importance'],
 plt.title('🎯 Feature Importance: Random Forest Model')
 plt.xlabel('Importance Score')
 plt.show()
-```
 
+```
 *Top 5 Most Important Features:*
 1. Traffic_Congestion_Index: *0.342*
 2. Dispatch_Time_Min: *0.198*
@@ -290,7 +286,8 @@ plt.show()
 5. Road_Quality_Index: *0.089*
 
 
-<img width="627" height="554" alt="Feature Importance Horizontal Bar Chart" src="https://github.com/user-attachments/assets/80697a43-6dc3-4fd8-85d4-3875f9486095" />
+<img width="627" height="554" alt="Feature Importance Horizontal Bar Chart" src="https://github.com/user-attachments/assets/602d34b0-6531-42c5-9bb4-e166b5f83ca6" />
+
 
 
 #### *Step 7: Clustering Analysis*
@@ -331,7 +328,8 @@ print("📊 CLUSTER ANALYSIS RESULTS:")
 print(cluster_summary)
 ```
 
-[Screenshot:<img width="632" height="392" alt="Cluster Scatter Plot showing 4 distinct patterns" src="https://github.com/user-attachments/assets/ba0e4ad3-825c-4442-8d5b-3a64167462be" />]
+<img width="632" height="392" alt="Cluster Scatter Plot showing 4 distinct patterns" src="https://github.com/user-attachments/assets/fd61c8c0-ba43-4641-a67f-e2e15c562bdd" />
+
 
 #### *Step 8: What-If Scenario Analysis*
 *Purpose:* Test potential improvements through simulation
@@ -356,11 +354,10 @@ bars = plt.bar(scenarios, avg_times, color=['gray', 'orange', 'green', 'red'], a
 plt.title('🔮 What-If Scenario Analysis: Response Time Impact')
 plt.ylabel('Average Response Time (Minutes)')
 plt.show()
+
 ```
+<img width="640" height="607" alt="Scenario Analysis Bar Chart showing potential improvements" src="https://github.com/user-attachments/assets/afa53a4e-b5c1-4d0c-a724-cb5013f93e07" />
 
-[Screenshot: Scenario Analysis Bar Chart showing potential improvements]
-
-<img width="598" height="603" alt="image" src="https://github.com/user-attachments/assets/15e4982b-3856-4ef5-b7f5-80ef65635505" />
 
 ---
 
@@ -398,9 +395,8 @@ plt.show()
 - *Purpose:* Validate machine learning model accuracy
 - *Title:* "ML Model: Predicted vs Actual Response Times"
 
-[Screenshot Space: Power BI Dashboard Overview]
+![emergencyflow response in rwanda dashboard](https://github.com/user-attachments/assets/d06f460f-fb09-4281-a07c-89e84248f171)
 
-![WhatsApp Image 2025-08-02 at 21 04 18_fa64aa2c](https://github.com/user-attachments/assets/8e1c4ee8-f026-4b5a-b5b5-890170e5f356)
 
 ---
 
@@ -480,8 +476,8 @@ print("\n📈 RESPONSE PERFORMANCE DISTRIBUTION:")
 for category, count in performance_dist.items():
     percentage = (count / len(df_clean)) * 100
     print(f"{category}: {count} cases ({percentage:.1f}%)")
-
 ```
+
 *Output:*
 
 📊 FINAL DATASET QUALITY:
@@ -496,7 +492,8 @@ Poor: 35 cases (14.3%)
 Excellent: 23 cases (9.4%)
 
 
-[Screenshot: <img width="707" height="668" alt="Performance Distribution Output" src="https://github.com/user-attachments/assets/d9953052-cc67-45d5-965c-ebf89314d8cc" />]
+<img width="707" height="668" alt="Performance Distribution Output" src="https://github.com/user-attachments/assets/cfa944ea-5cc4-406f-b875-2bf41c8c4a73" />
+
 
 ### *Key Performance Indicators:*
 - *📊 Total Cases Analyzed:* 245 emergency responses
