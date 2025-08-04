@@ -87,29 +87,33 @@ The primary purpose is to reduce emergency response times and ultimately save mo
 #### *Step 1: Data Loading & Exploration*
 *Purpose:* Load dataset and understand structure
 
-python
+```python
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+```
 # Load the CSV dataset
+```
 df = pd.read_csv("emergencyflow_rwanda_expanded.csv")
-
+```
 # Basic dataset information
+
+```
 print("📊 Dataset Info:")
 print(df.info())
 print(f"\n📏 Dataset Shape: {df.shape[0]} rows × {df.shape[1]} columns")
-
-
+```
 *Output Result:*
 
 📊 Dataset Info:
+```
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 245 entries, 0 to 244
 Data columns (total 17 columns):
 📏 Dataset Shape: 245 rows × 17 columns
-
+```
 
 
 <img width="1119" height="680" alt="Dataset Loading Output" src="https://github.com/user-attachments/assets/2e333778-f5e2-47e7-a013-39179b5f4a69" />
@@ -118,13 +122,14 @@ Data columns (total 17 columns):
 #### *Step 2: Data Cleaning & Preprocessing*
 *Purpose:* Clean data and create analytical features
 
-python
+```python
 # Check for missing values
 print("❌ Missing Values Analysis:")
 missing_data = df.isnull().sum()
 print(missing_data[missing_data > 0])
-
+```
 # Create response time categories
+```
 df_clean['Response_Category'] = pd.cut(df_clean['Response_Time_Min'], 
                                      bins=[0, 15, 25, 35, float('inf')], 
                                      labels=['Excellent', 'Good', 'Average', 'Poor'])
@@ -135,7 +140,7 @@ df_clean['Traffic_Category'] = pd.cut(df_clean['Traffic_Congestion_Index'],
                                     labels=['Low', 'Medium', 'High', 'Critical'])
 
 print("✅ Data cleaning completed - No missing values found!")
-
+```
 
 
 <img width="621" height="636" alt="Data Cleaning Results" src="https://github.com/user-attachments/assets/8a63a3df-482f-4e79-a657-5caffb1d8e9a" />
@@ -144,7 +149,7 @@ print("✅ Data cleaning completed - No missing values found!")
 #### *Step 3: Exploratory Data Analysis (EDA)*
 *Purpose:* Discover patterns and relationships in emergency response data
 
-python
+```python
 # Key statistics summary
 print("📋 KEY STATISTICS SUMMARY:")
 print(f"⏱  Average Response Time: {df_clean['Response_Time_Min'].mean():.2f} minutes")
@@ -162,7 +167,7 @@ axes[0, 0].set_ylabel('Frequency')
 
 plt.tight_layout()
 plt.show()
-
+```
 
 *Key Findings:*
 - Average response time: *26.8 minutes*
@@ -178,7 +183,7 @@ plt.show()
 #### *Step 4: Correlation Analysis*
 *Purpose:* Identify factors most correlated with response times
 
-python
+```python
 # Calculate correlation matrix
 numerical_cols = df_clean.select_dtypes(include=[np.number]).columns
 correlation_matrix = df_clean[numerical_cols].corr()
@@ -189,8 +194,9 @@ sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', center=0,
             square=True, fmt='.2f')
 plt.title('🔗 Correlation Matrix: Emergency Response Factors')
 plt.show()
-
+```
 # Key correlations with Response Time
+```
 response_correlations = correlation_matrix['Response_Time_Min'].sort_values(key=abs, ascending=False)
 print("🎯 KEY CORRELATIONS WITH RESPONSE TIME:")
 for feature, corr in response_correlations.items():
@@ -198,14 +204,14 @@ for feature, corr in response_correlations.items():
         print(f"{feature}: {corr:.3f}")
 
 
-
+```
 <img width="601" height="540" alt="Correlation Heatmap showing traffic congestion correlation" src="https://github.com/user-attachments/assets/5b915e45-5262-4288-a240-76b531576471" />
 
 
 #### *Step 5: Machine Learning Models*
 *Purpose:* Build predictive models for response time forecasting
 
-python
+```python
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
@@ -249,14 +255,14 @@ print(f"   📊 Test MAE: {test_mae:.4f} minutes")
    - Test RMSE: *3.47 minutes*
    - Test MAE: *2.81 minutes*
 
-
+```
 <img width="624" height="645" alt="Model Performance Comparison Chart" src="https://github.com/user-attachments/assets/43e0e218-6a44-4271-9b6e-d31924d556e9" />
 
 
 #### *Step 6: Feature Importance Analysis*
 *Purpose:* Identify which factors most impact response times
 
-python
+```python
 # Get feature importance from Random Forest
 feature_importance = pd.DataFrame({
     'Feature': feature_columns,
@@ -274,7 +280,7 @@ plt.barh(feature_importance['Feature'], feature_importance['Importance'],
 plt.title('🎯 Feature Importance: Random Forest Model')
 plt.xlabel('Importance Score')
 plt.show()
-
+```
 
 *Top 5 Most Important Features:*
 1. Traffic_Congestion_Index: *0.342*
@@ -290,7 +296,7 @@ plt.show()
 #### *Step 7: Clustering Analysis*
 *Purpose:* Identify distinct patterns in emergency response scenarios
 
-python
+```python
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
@@ -323,14 +329,14 @@ plt.show()
 cluster_summary = df_clean.groupby('Cluster')[clustering_features].mean().round(2)
 print("📊 CLUSTER ANALYSIS RESULTS:")
 print(cluster_summary)
-
+```
 
 [Screenshot:<img width="632" height="392" alt="Cluster Scatter Plot showing 4 distinct patterns" src="https://github.com/user-attachments/assets/ba0e4ad3-825c-4442-8d5b-3a64167462be" />]
 
 #### *Step 8: What-If Scenario Analysis*
 *Purpose:* Test potential improvements through simulation
 
-python
+```python
 # Scenario 1: Reduce traffic congestion by 30%
 scenario1_data = X_test.copy()
 scenario1_data['Traffic_Congestion_Index'] *= 0.7
@@ -350,7 +356,7 @@ bars = plt.bar(scenarios, avg_times, color=['gray', 'orange', 'green', 'red'], a
 plt.title('🔮 What-If Scenario Analysis: Response Time Impact')
 plt.ylabel('Average Response Time (Minutes)')
 plt.show()
-
+```
 
 [Screenshot: Scenario Analysis Bar Chart showing potential improvements]
 
@@ -404,7 +410,7 @@ plt.show()
 
 *Technique Used:* Random Forest Regression with ensemble methods
 
-python
+```python
 # Advanced ML Pipeline
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import cross_val_score
@@ -432,12 +438,12 @@ df_clean['Traffic_Speed_Ratio'] = df_clean['Avg_Traffic_Speed_kmph'] / df_clean[
 - *Features:* 8 key variables including traffic, geography, and resources
 - *Validation:* 80/20 train-test split with 5-fold cross-validation
 - *Performance:* 78.9% accuracy (R² score)
-
+```
 ### *Power BI Advanced Features:*
 
 *DAX Formulas Used:*
 
-dax
+```dax
 // Average Response Time
 Avg_Response_Time = AVERAGE('EmergencyData'[Predicted_Response_Time])
 
@@ -453,7 +459,7 @@ Calls_Per_Year = CALCULATE(
 // Average Response by Region
 Avg_Response_By_Region = AVERAGE('EmergencyData'[Predicted_Response_Time])
 
-
+```
 ---
 
 ## 📈 Results
@@ -461,7 +467,7 @@ Avg_Response_By_Region = AVERAGE('EmergencyData'[Predicted_Response_Time])
 ### *Python Code Results & Analysis:*
 
 #### *Data Quality Assessment:*
-python
+```python
 # Final dataset statistics
 print("📊 FINAL DATASET QUALITY:")
 print(f"✅ Total Records: {len(df_clean):,}")
@@ -475,7 +481,7 @@ for category, count in performance_dist.items():
     percentage = (count / len(df_clean)) * 100
     print(f"{category}: {count} cases ({percentage:.1f}%)")
 
-
+```
 *Output:*
 
 📊 FINAL DATASET QUALITY:
@@ -570,5 +576,3 @@ This project provides a solid foundation for optimizing emergency medical servic
 "In emergency medicine, every minute counts. Through data analytics, we can ensure those minutes are used most effectively to save lives."
 
 *📧 Contact:* [angelnirere22@gmail.com]  
-*🔗 GitHub:* [Repository Link]  
-*📊 Dashboard:* [Power BI Link]
