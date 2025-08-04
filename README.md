@@ -569,6 +569,6 @@ This project provides a solid foundation for optimizing emergency medical servic
 
 "In emergency medicine, every minute counts. Through data analytics, we can ensure those minutes are used most effectively to save lives."
 
-*📧 Contact:* [Your Email]  
+*📧 Contact:* [angelnirere22@gmail.com]  
 *🔗 GitHub:* [Repository Link]  
 *📊 Dashboard:* [Power BI Link]
